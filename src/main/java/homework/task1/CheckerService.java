@@ -6,26 +6,39 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CheckerService {
-	private static List<Integer> simpleNumbers = new ArrayList<>();
+	private static List<Integer> simpleNumbers;
+	private static int start;
+	private static int end;
+	private static int count;
+	private static boolean flag = false;
 
-	public static void check() {
+	public static void setFlag(final boolean flag) {
+		CheckerService.flag = flag;
+	}
+
+	public static void inputParameter() {
 		int[] parameters = getParameter();
-		int start = Math.min(parameters[0], parameters[1]);
-		int end = Math.max(parameters[0], parameters[1]);
-		int count = Runtime.getRuntime().availableProcessors();
+		start = Math.min(parameters[0], parameters[1]);
+		end = Math.max(parameters[0], parameters[1]);
+		count = Runtime.getRuntime().availableProcessors();
 		if (parameters[2] < 1) {
 			System.out.println(String.format("Count of thread incorrect...%nDefault count thread is %s", count));
 		} else {
 			count = parameters[2];
 		}
+	}
 
-		List<CheckerNumberBuffered> checkerNumberBuffered = new ArrayList<>();
-		preparedChecker(start, end, count, checkerNumberBuffered);
+	public static void check(final boolean flag) {
+		CheckerService.flag = flag;
+		simpleNumbers = Collections.synchronizedList(new ArrayList<Integer>());
+		List<Checker> checkers = new ArrayList<>();
+		preparedChecker(start, end, count, checkers);
 
-		runChecker(checkerNumberBuffered);
+		runChecker(checkers);
 
-		for (CheckerNumberBuffered numberBuffered : checkerNumberBuffered) {
-			simpleNumbers.addAll(numberBuffered.getNumberBuffer());
+		for (Checker checker : checkers) {
+			if (!checker.isFlag())
+				simpleNumbers.addAll(checker.getNumbers());
 		}
 	}
 
@@ -35,18 +48,18 @@ public class CheckerService {
 
 	private static int[] getParameter() {
 		int[] result = new int[3];
-		try (Scanner scanner = new Scanner(System.in)) {
+		Scanner scanner = new Scanner(System.in);
 			System.out.println("Enter lower bound:");
 			result[0] = getValue(scanner);
 			System.out.println("Enter upper bound:");
 			result[1] = getValue(scanner);
 			System.out.println("Enter threads count:");
 			result[2] = getValue(scanner);
-		}
+
 		return result;
 	}
 
-	private static void preparedChecker(final int start, final int end, final int count, final List<CheckerNumberBuffered> checkerNumberBuffered) {
+	private static void preparedChecker(final int start, final int end, final int count, final List<Checker> checkers) {
 		int countThread;
 		if (end < count) {
 			countThread = end;
@@ -58,15 +71,22 @@ public class CheckerService {
 		int upperBound = start + interval;
 		for (int index = 0; index < countThread; index++) {
 			if (upperBound <= end) {
-				checkerNumberBuffered.add(index, new CheckerNumberBuffered(lowerBound, upperBound));
+				Checker checker;
+				if (flag) {
+					checker = new Checker(lowerBound, upperBound);
+				} else {
+					checker = new Checker(lowerBound, upperBound, simpleNumbers);
+				}
+
+				checkers.add(index, checker);
 				lowerBound = upperBound + 1;
 				upperBound += interval;
 			}
 		}
 	}
 
-	private static void runChecker(final List<CheckerNumberBuffered> checkerNumberBuffered) {
-		for (CheckerNumberBuffered number : checkerNumberBuffered) {
+	private static void runChecker(final List<Checker> checker) {
+		for (Checker number : checker) {
 			Thread thread = new Thread(number);
 			thread.start();
 			try {

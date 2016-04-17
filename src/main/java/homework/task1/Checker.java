@@ -3,27 +3,36 @@ package homework.task1;
 import java.util.ArrayList;
 import java.util.List;
 
-class CheckerNumberBuffered implements Runnable {
-	private List<Integer> numberBuffer = new ArrayList<>();
+class Checker implements Runnable {
+	private List<Integer> numbers;
+
 	private int start;
 	private int end;
+	private boolean flag=false;
 
-	CheckerNumberBuffered(final int start, final int end) {
+	Checker(final int start, final int end) {
 		this.start = start;
 		this.end = end;
+		numbers = new ArrayList<>();
+	}
+
+	Checker(final int start, final int end, final List<Integer> collectionNumbers) {
+		this(start,end);
+		flag=true;
+		numbers = collectionNumbers;
 	}
 
 	@Override
 	public void run() {
 		for (int index = start; index <= end; index++) {
 			if (isSimpleNumber(index)) {
-				numberBuffer.add(index);
+				numbers.add(index);
 			}
 		}
 	}
 
-	List<Integer> getNumberBuffer() {
-		return numberBuffer;
+	List<Integer> getNumbers() {
+		return numbers;
 	}
 
 	private boolean isSimpleNumber(int number) {
@@ -35,4 +44,10 @@ class CheckerNumberBuffered implements Runnable {
 		}
 		return count == 1;
 	}
+
+	boolean isFlag() {
+		return flag;
+	}
+
+
 }

@@ -5,11 +5,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 
-public class CheckerNumberBufferedTest {
+public class CheckerTest {
 	@Test
 	public void testRun() {
 
-		//Thread thread = new Thread( new CheckerNumberBuffered(2, 3));
+		//Thread thread = new Thread( new Checker(2, 3));
 
 		//assertEquals("",)
 

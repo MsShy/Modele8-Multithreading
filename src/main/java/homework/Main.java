@@ -5,6 +5,8 @@ import homework.task1.CheckerService;
 import java.util.Scanner;
 
 public class Main {
+
+	
 	private Main() {
 	}
 
@@ -14,6 +16,7 @@ public class Main {
 		showMenu(scanner);
 		System.out.println("Good bay");
 	}
+
 
 	private static void showMenu(final Scanner scanner) {
 		System.out.println("Menu:");
@@ -26,8 +29,22 @@ public class Main {
 			String input = scanner.nextLine();
 			switch (input) {
 				case "1":
-					CheckerService.check();
-					System.out.println(CheckerService.getSimpleNumbers());
+
+					long result;
+					CheckerService.inputParameter();
+
+					result = -System.currentTimeMillis();
+					CheckerService.check(false);
+					System.out.println(String.format("storing numbers in separate collections of each stream:%n%s", CheckerService.getSimpleNumbers()));
+					result += System.currentTimeMillis();
+					System.out.println(String.format("saving speed is %d", result));
+
+					result = -System.currentTimeMillis();
+					CheckerService.check(true);
+					System.out.println(String.format("storing numbers in the general collection:%n%s", CheckerService.getSimpleNumbers()));
+					result += System.currentTimeMillis();
+					System.out.println(String.format("saving speed is %d", result));
+
 					break;
 				case "2":
 					System.out.println("Not implements yet");
