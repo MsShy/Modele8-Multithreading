@@ -30,20 +30,20 @@ public class Main {
 			switch (input) {
 				case "1":
 
-					long result;
+					long timer;
 					CheckerService.inputParameter();
 
-					result = -System.currentTimeMillis();
+					timer = -System.currentTimeMillis();
 					CheckerService.check(false);
 					System.out.println(String.format("storing numbers in separate collections of each stream:%n%s", CheckerService.getSimpleNumbers()));
-					result += System.currentTimeMillis();
-					System.out.println(String.format("saving speed is %d", result));
+					timer += System.currentTimeMillis();
+					System.out.println(String.format("saving speed is %d", timer));
 
-					result = -System.currentTimeMillis();
+					timer = -System.currentTimeMillis();
 					CheckerService.check(true);
 					System.out.println(String.format("storing numbers in the general collection:%n%s", CheckerService.getSimpleNumbers()));
-					result += System.currentTimeMillis();
-					System.out.println(String.format("saving speed is %d", result));
+					timer += System.currentTimeMillis();
+					System.out.println(String.format("saving speed is %d", timer));
 
 					break;
 				case "2":
