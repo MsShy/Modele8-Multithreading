@@ -9,11 +9,16 @@ public class CheckerNumberBufferedTest {
 	@Test
 	public void testRun() {
 
-		Thread thread = new Thread(new CheckerNumberBuffered(2,3));
+		//Thread thread = new Thread( new CheckerNumberBuffered(2, 3));
+
+		//assertEquals("",)
+
 	}
 
 	@Test
 	public void testGetNumberBuffer() {
+
+
 
 	}
 

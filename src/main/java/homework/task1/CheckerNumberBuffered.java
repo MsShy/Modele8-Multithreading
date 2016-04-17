@@ -3,12 +3,12 @@ package homework.task1;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckerNumberBuffered implements Runnable {
+class CheckerNumberBuffered implements Runnable {
 	private List<Integer> numberBuffer = new ArrayList<>();
 	private int start;
 	private int end;
 
-	public CheckerNumberBuffered(final int start, final int end) {
+	CheckerNumberBuffered(final int start, final int end) {
 		this.start = start;
 		this.end = end;
 	}
@@ -22,7 +22,7 @@ public class CheckerNumberBuffered implements Runnable {
 		}
 	}
 
-	public List<Integer> getNumberBuffer() {
+	List<Integer> getNumberBuffer() {
 		return numberBuffer;
 	}
 
