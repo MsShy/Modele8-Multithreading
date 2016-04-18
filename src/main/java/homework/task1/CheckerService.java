@@ -1,6 +1,6 @@
 package homework.task1;
 
-import homework.Util.Constant;
+import homework.util.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,4 +1,4 @@
-package homework.Util;
+package homework.util;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
