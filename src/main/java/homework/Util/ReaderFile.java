@@ -1,12 +1,9 @@
-package homework.task2;
-
-import homework.Constant;
+package homework.Util;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
 
 public class ReaderFile {
 
@@ -25,17 +22,4 @@ public class ReaderFile {
 		return builder.toString();
 	}
 
-	/*public static getID(String balances) {
-
-
-		final List<String> phrases = get(balances);
-		if (phrases != null) {
-
-			for (String phrase : phrases) {
-				int id = Constant.PATTERN.split(phrase).length;
-			}
-
-
-		}
-	}*/
 }

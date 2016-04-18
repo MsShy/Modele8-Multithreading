@@ -37,7 +37,6 @@ public class CheckerTest {
 	public void testCollectionNumbersEmpty() {
 		checker = new Checker(-2, 0, collectionNumbers);
 		checker.run();
-		collectionNumbers = checker.getNumbers();
 		assertTrue(collectionNumbers.isEmpty());
 	}
 
@@ -45,7 +44,6 @@ public class CheckerTest {
 	public void testCollectionNumbersNotEmpty() {
 		checker = new Checker(0, 5, collectionNumbers);
 		checker.run();
-		collectionNumbers = checker.getNumbers();
 		final String expected = "[2, 3, 5]";
 		assertEquals(expected, collectionNumbers.toString());
 	}

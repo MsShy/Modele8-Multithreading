@@ -1,26 +1,34 @@
 package homework.task1;
 
+import homework.Util.Constant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 public class CheckerService {
+	private static final Logger log = LoggerFactory.getLogger(CheckerService.class);
 	private static List<Integer> simpleNumbers;
 	private static int start;
 	private static int end;
-	private static int count;
-	private static boolean flag = false;
+	private static int count = Constant.AVAILABLE_PROCESSORS;
+	private static boolean flag;
 
-	public static void setFlag(final boolean flag) {
-		CheckerService.flag = flag;
+	public static void setStart(final int start) {
+		CheckerService.start = start;
+	}
+
+	public static void setEnd(final int end) {
+		CheckerService.end = end;
 	}
 
 	public static void inputParameter() {
 		int[] parameters = getParameter();
 		start = Math.min(parameters[0], parameters[1]);
 		end = Math.max(parameters[0], parameters[1]);
-		count = Runtime.getRuntime().availableProcessors();
 		if (parameters[2] < 1) {
 			System.out.println(String.format("Count of thread incorrect...%nDefault count thread is %s", count));
 		} else {
@@ -29,6 +37,7 @@ public class CheckerService {
 	}
 
 	public static void check(final boolean flag) {
+		log.info(String.format("Start check method with parameter '%s'", flag));
 		CheckerService.flag = flag;
 		simpleNumbers = Collections.synchronizedList(new ArrayList<Integer>());
 		List<Checker> checkers = new ArrayList<>();
@@ -61,7 +70,7 @@ public class CheckerService {
 
 	private static void preparedChecker(final int start, final int end, final int count, final List<Checker> checkers) {
 		int countThread;
-		if (end < count) {
+		if (end < count && end > 0) {
 			countThread = end;
 		} else {
 			countThread = count;
@@ -73,9 +82,9 @@ public class CheckerService {
 			if (upperBound <= end) {
 				Checker checker;
 				if (flag) {
-					checker = new Checker(lowerBound, upperBound);
-				} else {
 					checker = new Checker(lowerBound, upperBound, simpleNumbers);
+				} else {
+					checker = new Checker(lowerBound, upperBound);
 				}
 
 				checkers.add(index, checker);
@@ -92,7 +101,7 @@ public class CheckerService {
 			try {
 				thread.join();
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				log.error(e.getMessage(), e);
 			}
 		}
 	}

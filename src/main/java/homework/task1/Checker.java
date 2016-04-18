@@ -8,7 +8,7 @@ class Checker implements Runnable {
 
 	private int start;
 	private int end;
-	private boolean flag=false;
+	private boolean flag = false;
 
 	Checker(final int start, final int end) {
 		this.start = start;
@@ -17,8 +17,8 @@ class Checker implements Runnable {
 	}
 
 	Checker(final int start, final int end, final List<Integer> collectionNumbers) {
-		this(start,end);
-		flag=true;
+		this(start, end);
+		flag = true;
 		numbers = collectionNumbers;
 	}
 

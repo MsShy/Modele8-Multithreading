@@ -1,5 +1,6 @@
 package homework;
 
+import com.google.common.base.Stopwatch;
 import homework.task1.CheckerService;
 
 import java.util.Scanner;
@@ -29,22 +30,17 @@ public class Main {
 			String input = scanner.nextLine();
 			switch (input) {
 				case "1":
-
-					long timer;
 					CheckerService.inputParameter();
-
-					timer = -System.currentTimeMillis();
+					Stopwatch stopwatch = Stopwatch.createStarted();
 					CheckerService.check(false);
 					System.out.println(String.format("storing numbers in separate collections of each stream:%n%s", CheckerService.getSimpleNumbers()));
-					timer += System.currentTimeMillis();
-					System.out.println(String.format("saving speed is %d", timer));
-
-					timer = -System.currentTimeMillis();
+					System.out.println(String.format("saving speed is %s", stopwatch));
+					stopwatch.reset();
+					stopwatch.start();
 					CheckerService.check(true);
 					System.out.println(String.format("storing numbers in the general collection:%n%s", CheckerService.getSimpleNumbers()));
-					timer += System.currentTimeMillis();
-					System.out.println(String.format("saving speed is %d", timer));
-
+					System.out.println(String.format("saving speed is %s", stopwatch));
+					stopwatch.stop();
 					break;
 				case "2":
 					System.out.println("Not implements yet");
