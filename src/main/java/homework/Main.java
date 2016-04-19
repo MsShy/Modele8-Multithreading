@@ -3,6 +3,7 @@ package homework;
 import com.google.common.base.Stopwatch;
 import homework.task1.CheckerService;
 import homework.task2.TransactionController;
+import homework.util.Constant;
 
 import java.util.Scanner;
 
@@ -21,12 +22,14 @@ public class Main {
 
 
 	private static void showMenu(final Scanner scanner) {
-		System.out.println("Menu:");
-		System.out.println("1 - start task 1");
-		System.out.println("2 - start task 2");
-		System.out.println("3 - exit");
 		boolean flag = true;
 		while (flag) {
+			System.out.println(Constant.DELIMITER);
+			System.out.println("Menu:");
+			System.out.println("1 - start task 1");
+			System.out.println("2 - start task 2");
+			System.out.println("3 - exit");
+			System.out.println(Constant.DELIMITER);
 			System.out.println("Select menu item:");
 			String input = scanner.nextLine();
 			switch (input) {
