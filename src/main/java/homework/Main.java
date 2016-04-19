@@ -2,6 +2,7 @@ package homework;
 
 import com.google.common.base.Stopwatch;
 import homework.task1.CheckerService;
+import homework.task2.TransactionController;
 
 import java.util.Scanner;
 
@@ -30,20 +31,10 @@ public class Main {
 			String input = scanner.nextLine();
 			switch (input) {
 				case "1":
-					CheckerService.inputParameter();
-					Stopwatch stopwatch = Stopwatch.createStarted();
-					CheckerService.check(false);
-					System.out.println(String.format("storing numbers in separate collections of each stream:%n%s", CheckerService.getSimpleNumbers()));
-					System.out.println(String.format("saving speed is %s", stopwatch));
-					stopwatch.reset();
-					stopwatch.start();
-					CheckerService.check(true);
-					System.out.println(String.format("storing numbers in the general collection:%n%s", CheckerService.getSimpleNumbers()));
-					System.out.println(String.format("saving speed is %s", stopwatch));
-					stopwatch.stop();
+					findSimpleNumber();
 					break;
 				case "2":
-					System.out.println("Not implements yet");
+					loadStatement();
 					break;
 				case "3":
 					flag = false;
@@ -53,6 +44,27 @@ public class Main {
 					System.out.println("Enter incorrect menu item\nExpected from 1 to 3");
 			}
 		}
+	}
+
+	private static void loadStatement() {
+		TransactionController transactionController = new TransactionController();
+		System.out.println(String.format("Starting balance:%n%s", transactionController.getBalance()));
+		transactionController.execute();
+		System.out.println(String.format("Balance after transactions:%n%s", transactionController.getBalance()));
+	}
+
+	private static void findSimpleNumber() {
+		CheckerService.inputParameter();
+		Stopwatch stopwatch = Stopwatch.createStarted();
+		CheckerService.check(false);
+		System.out.println(String.format("storing numbers in separate collections of each stream:%n%s", CheckerService.getSimpleNumbers()));
+		System.out.println(String.format("saving speed is %s", stopwatch));
+		stopwatch.reset();
+		stopwatch.start();
+		CheckerService.check(true);
+		System.out.println(String.format("storing numbers in the general collection:%n%s", CheckerService.getSimpleNumbers()));
+		System.out.println(String.format("saving speed is %s", stopwatch));
+		stopwatch.stop();
 	}
 
 }

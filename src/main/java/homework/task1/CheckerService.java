@@ -17,6 +17,9 @@ public class CheckerService {
 	private static int count = Constant.AVAILABLE_PROCESSORS;
 	private static boolean flag;
 
+	private CheckerService() {
+	}
+
 	public static void setStart(final int start) {
 		CheckerService.start = start;
 	}
@@ -37,7 +40,6 @@ public class CheckerService {
 	}
 
 	public static void check(final boolean flag) {
-		log.info(String.format("Start check method with parameter '%s'", flag));
 		CheckerService.flag = flag;
 		simpleNumbers = Collections.synchronizedList(new ArrayList<Integer>());
 		List<Checker> checkers = new ArrayList<>();
@@ -79,7 +81,9 @@ public class CheckerService {
 		int lowerBound = start;
 		int upperBound = start + interval;
 		for (int index = 0; index < countThread; index++) {
-			if (upperBound <= end) {
+			if (upperBound > end) {
+				upperBound = end;
+			}
 				Checker checker;
 				if (flag) {
 					checker = new Checker(lowerBound, upperBound, simpleNumbers);
@@ -90,7 +94,6 @@ public class CheckerService {
 				checkers.add(index, checker);
 				lowerBound = upperBound + 1;
 				upperBound += interval;
-			}
 		}
 	}
 
@@ -102,6 +105,7 @@ public class CheckerService {
 				thread.join();
 			} catch (InterruptedException e) {
 				log.error(e.getMessage(), e);
+				thread.interrupt();
 			}
 		}
 	}
@@ -117,4 +121,5 @@ public class CheckerService {
 			}
 		}
 	}
+
 }

@@ -1,11 +1,11 @@
 package homework.task2;
 
-public class TransObject {
+class Transaction {
 	private int sender;
 	private int recipient;
 	private int amount;
 
-	public TransObject(final int sender, final int recipient, final int amount) {
+	Transaction(final int sender, final int recipient, final int amount) {
 		this.sender = sender;
 		this.recipient = recipient;
 		this.amount = amount;
